@@ -3,28 +3,22 @@ import Link from 'next/link'
 import { Menu, MenuItem } from 'react-foundation';
 import styled from 'styled-components';
 
-const Container = styled.div`
-	& > .menu a {
-		padding: 0;
-	}
-`
-
-const Wrapper = styled.div`
-	max-width: 700px;
-	margin: auto;
-	padding: 10px;
-`
+const contentStyles = {
+	maxWidth: 700,
+	margin: 'auto',
+	padding: '50px 10px',
+}
 
 const Layout = ({ children }) => {
 	return (
-		<Container>
+		<div>
 			<Menu className="top-bar">
-				<MenuItem className="menu-text"><Link href="/">YouTube Playlist Analyzer</Link></MenuItem>
+				<MenuItem className="menu-text"><Link href="/"><a style={{ padding: 0 }}>YouTube Playlist Analyzer</a></Link></MenuItem>
 			</Menu>
-			<Wrapper>
+			<div style={contentStyles}>
 				{children}
-			</Wrapper>
-		</Container >
+			</div>
+		</div>
 	)
 }
 

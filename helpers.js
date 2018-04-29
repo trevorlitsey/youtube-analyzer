@@ -1,21 +1,23 @@
-
-
-
-export const getApiUrl = (section, userParams) => {
+const getApiUrl = (section, userParams, apiKey = process.env.YOUTUBE_API_KEY) => {
 
 	const params = {
 		part: 'snippet',
-		apiKey: process.env.YOUTUBE_API_KEY,
 		maxResults: 50,
 		...userParams,
 	}
 
-	const baseUrl = 'https://www.googleapis.com/youtube/v3/';
+	const baseUrl = `https://www.googleapis.com/youtube/v3/${section}?key=${apiKey}`
 
-	const url = Object.entries(([key, value], acc) => {
-		acc += '&' + key + '=' + value
-	}, baseUrl + section + '?' + apiKey)
+	const paramsUrl = Object.entries(params).map(([key, value]) => {
+		return `&${key}=${value}`
+	}).join('')
 
-	return url;
+	return baseUrl + paramsUrl;
 
 }
+
+const helpers = {
+	getApiUrl,
+}
+
+module.exports = helpers;
