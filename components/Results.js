@@ -10,11 +10,11 @@ const Results = (props) => {
 		)
 	}
 
-	const results = [];
+	// const results = [];
 
-	Object.values(data).map((obj) => {
-		results.push(...obj.items);
-	})
+	// Object.values(data).map((obj) => {
+	// 	results.push(...obj.items);
+	// })
 
 	return (
 		<div>
@@ -30,7 +30,7 @@ const Results = (props) => {
 				</thead>
 				<tbody>
 					<tr>
-						<td>{results.length}</td>
+						<td>????</td>
 						<td>This is longer content Donec id elit non mi porta gravida at eget metus.</td>
 						<td>Content Goes Here</td>
 						<td>Content Goes Here</td>

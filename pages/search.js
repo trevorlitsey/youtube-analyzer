@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import { getApiUrl } from '../helpers';
+import { getApiUrl, getVideosFromChannelId } from '../helpers';
 
 import Layout from '../components/Layout';
 import Breadcrumbs from '../components/Breadcrumbs';
@@ -13,54 +13,46 @@ const apiKey = 'AIzaSyAlAtI54mpJ7iDblL-pisPlQr8F6vmTy0A';
 class Search extends React.PureComponent {
 
 	state = {
-		data: this.props.data || [],
+		videos: [],
 		progress: 0,
-		pagesLeft: this.props.data.length - 1,
 	}
 
 	static async getInitialProps({ req, query }) {
 
-		const params = {
-			channelId: 'UCoebwHSTvwalADTJhps0emA',
-			pageToken: 'CDIQAA',
-		}
+		const videos = await getVideosFromChannelId('UCoebwHSTvwalADTJhps0emA');
 
-		const url = getApiUrl('search', params, apiKey)
-
-		const data = await axios.get(url).then(res => res.data)
-
-		const videoIds = data.items.map((item) => item.id.videoId)
-
-		return { data: [data], videoIds }
+		return { videos }
 	}
 
 	componentDidMount = async () => {
 
-		const { data } = this.props;
+		// const { data } = { ...this.props };
 
-		const totalPages = Math.ceil(data[0].pageInfo.totalResults / data[0].pageInfo.resultsPerPage);
+		// const totalPages = Math.ceil(data[0].pageInfo.totalResults / data[0].pageInfo.resultsPerPage);
 
-		while (data[data.length - 1].nextPageToken) {
+		// while (data[data.length - 1].nextPageToken) {
 
-			const params = {
-				channelId: 'UCoebwHSTvwalADTJhps0emA',
-				pageToken: data[data.length - 1].nextPageToken,
-			}
+		// 	const params = {
+		// 		channelId: 'UCoebwHSTvwalADTJhps0emA',
+		// 		pageToken: data[data.length - 1].nextPageToken,
+		// 	}
 
-			const url = getApiUrl('search', params, apiKey)
-			const nextData = await axios.get(url).then(res => res.data)
-			data.push(nextData);
+		// 	const url = getApiUrl('search', params, apiKey)
+		// 	const data = await axios.get(url).then(res => res.data)
+		// 	const videoIds = data.items.map((item) => item.id.videoId)
 
-			// const videoIds = data.items.map((item) => item.id.videoId)
+		// 	const videoData = await axios.get(url).then(res => res.data)
 
-			this.setState({
-				data,
-				progress: data.length / totalPages * 100,
-				pagesLeft: totalPages - data.length,
-			})
-		}
+		// 	data.push(nextData);
 
-		this.setState({ progress: 100, pagesLeft: 0 })
+		// 	this.setState({
+		// 		videoIds,
+		// 		progress: data.length / totalPages * 100,
+		// 		pagesLeft: totalPages - data.length,
+		// 	})
+		// }
+
+		// this.setState({ progress: 100, pagesLeft: 0 })
 
 	}
 
@@ -68,7 +60,7 @@ class Search extends React.PureComponent {
 
 	render() {
 
-		const { progress, pagesLeft, data } = this.state;
+		const { progress, data } = this.state;
 
 		return (
 			<Layout>
