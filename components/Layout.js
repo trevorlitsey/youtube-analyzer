@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
 	return (
 		<div>
 			<Menu className="top-bar">
-				<MenuItem className="menu-text"><Link href="/"><a style={{ padding: 0 }}>YouTube Playlist Analyzer</a></Link></MenuItem>
+				<MenuItem className="menu-text"><Link href="/"><a style={{ padding: 0 }}>YouTube Analyzer</a></Link></MenuItem>
 			</Menu>
 			<div style={contentStyles}>
 				{children}

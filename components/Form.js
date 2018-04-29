@@ -26,7 +26,7 @@ class Form extends React.PureComponent {
 	render() {
 		return (
 			<Wrapper>
-				<h3 className="title">YouTube Playlist Analyzer</h3>
+				<h3 className="title">YouTube Analyzer</h3>
 				<select name="options">
 					<option value="one">Playlist URL</option>
 					<option value="two">Channel URL</option>

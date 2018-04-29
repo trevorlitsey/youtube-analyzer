@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const getApiUrl = (section, userParams, apiKey = process.env.YOUTUBE_API_KEY) => {
+const getApiUrl = (section, userParams, apiKey = 'AIzaSyAlAtI54mpJ7iDblL-pisPlQr8F6vmTy0A') => {
 
 	const params = {
 		part: 'snippet',
@@ -54,13 +54,29 @@ const getVideosFromChannelId = async (channelId) => {
 
 }
 
-const getVideoDetails = (ids) => {
-	// TODO
+const processVideoIds = async (videoIds) => {
+
+	const videoPromises = videoIds.map(page => {
+		const id = page.join(',');
+		const url = getApiUrl('videos', { part: 'statistics', id })
+		return axios.get(url)
+	})
+
+	const res = await Promise.all(videoPromises);
+
+	const videoDetails = [];
+	res
+		.map(res => res.data)
+		.map(res => res.items)
+		.forEach(page => videoDetails.push(...page));
+
+	return videoDetails
 }
 
 const helpers = {
 	getApiUrl,
 	getVideosFromChannelId,
+	processVideoIds,
 }
 
 module.exports = helpers;

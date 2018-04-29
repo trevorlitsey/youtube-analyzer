@@ -1,34 +1,36 @@
 import React from 'react';
 import axios from 'axios';
 
-import { getApiUrl, getVideosFromChannelId } from '../helpers';
+import { getApiUrl, getVideosFromChannelId, processVideoIds } from '../helpers';
 
 import Layout from '../components/Layout';
 import Breadcrumbs from '../components/Breadcrumbs';
 import Progress from '../components/Progress';
 import Results from '../components/Results';
 
-const apiKey = 'AIzaSyAlAtI54mpJ7iDblL-pisPlQr8F6vmTy0A';
-
 class Search extends React.PureComponent {
 
 	state = {
-		videos: [],
+		videoDetails: [],
 		progress: 0,
 	}
 
 	static async getInitialProps({ req, query }) {
 
-		const videos = await getVideosFromChannelId('UCoebwHSTvwalADTJhps0emA');
+		const videoIds = await getVideosFromChannelId('UCoebwHSTvwalADTJhps0emA');
 
-		return { videos }
+		return { videoIds }
 	}
 
 	componentDidMount = async () => {
 
-		// const { data } = { ...this.props };
+		const { videoIds } = { ...this.props };
 
-		// const totalPages = Math.ceil(data[0].pageInfo.totalResults / data[0].pageInfo.resultsPerPage);
+		const totalPages = videoIds.length;
+
+		const videoDetails = await processVideoIds(videoIds)
+
+		this.setState({ videoDetails })
 
 		// while (data[data.length - 1].nextPageToken) {
 
