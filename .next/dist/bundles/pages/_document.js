@@ -67,27 +67,12 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 0:
-/***/ (function(module, exports) {
-
-module.exports = require("react");
-
-/***/ }),
-
-/***/ 12:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(13);
-
-
-/***/ }),
-
-/***/ 13:
+/***/ "./pages/_document.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96,14 +81,15 @@ module.exports = __webpack_require__(13);
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+var _jsxFileName = "/Users/trevorlitsey/Documents/code/2 projects/youtube-analyzer/pages/_document.js";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(0);
+var _react = __webpack_require__("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _document = __webpack_require__(14);
+var _document = __webpack_require__("next/document");
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -130,23 +116,61 @@ var MyDocument = function (_Document) {
 		value: function render() {
 			return _react2.default.createElement(
 				"html",
-				null,
+				{
+					__source: {
+						fileName: _jsxFileName,
+						lineNumber: 7
+					}
+				},
 				_react2.default.createElement(
 					_document.Head,
-					null,
-					_react2.default.createElement("link", { rel: "stylesheet", href: "/static/foundation.min.css" }),
+					{
+						__source: {
+							fileName: _jsxFileName,
+							lineNumber: 8
+						}
+					},
+					_react2.default.createElement("link", { rel: "stylesheet", href: "/static/foundation.min.css", __source: {
+							fileName: _jsxFileName,
+							lineNumber: 9
+						}
+					}),
 					_react2.default.createElement(
 						"title",
-						null,
+						{
+							__source: {
+								fileName: _jsxFileName,
+								lineNumber: 10
+							}
+						},
 						"YouTube Analyzer"
 					),
-					_react2.default.createElement("link", { rel: "icon", type: "image/ico", href: "/static/favicon.ico" })
+					_react2.default.createElement("link", { rel: "icon", type: "image/ico", href: "/static/favicon.ico", __source: {
+							fileName: _jsxFileName,
+							lineNumber: 11
+						}
+					})
 				),
 				_react2.default.createElement(
 					"body",
-					null,
-					_react2.default.createElement(_document.Main, null),
-					_react2.default.createElement(_document.NextScript, null)
+					{
+						__source: {
+							fileName: _jsxFileName,
+							lineNumber: 13
+						}
+					},
+					_react2.default.createElement(_document.Main, {
+						__source: {
+							fileName: _jsxFileName,
+							lineNumber: 14
+						}
+					}),
+					_react2.default.createElement(_document.NextScript, {
+						__source: {
+							fileName: _jsxFileName,
+							lineNumber: 15
+						}
+					})
 				)
 			);
 		}
@@ -159,11 +183,27 @@ exports.default = MyDocument;
 
 /***/ }),
 
-/***/ 14:
+/***/ 0:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("./pages/_document.js");
+
+
+/***/ }),
+
+/***/ "next/document":
 /***/ (function(module, exports) {
 
 module.exports = require("next/document");
 
+/***/ }),
+
+/***/ "react":
+/***/ (function(module, exports) {
+
+module.exports = require("react");
+
 /***/ })
 
 /******/ });
+//# sourceMappingURL=_document.js.map
