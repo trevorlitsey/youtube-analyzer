@@ -76,7 +76,6 @@ class Form extends React.PureComponent {
 						max-width: 700px;
 						border: 1px solid rgba(0,0,0,.2);
 						margin: 50px auto 0;
-						border-radius: 6px;
 					}
 
 					form {
