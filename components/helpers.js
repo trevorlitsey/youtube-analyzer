@@ -10,3 +10,28 @@ export function secondsToHms(d) {
 	var sDisplay = s > 0 ? s + (s == 1 ? "s" : "s") : "";
 	return hDisplay + mDisplay + sDisplay;
 }
+
+export function getPlaceHolderTest(optionValue = '') {
+
+	const isUrl = optionValue.includes('Url')
+	const isChannel = optionValue.includes('channel')
+
+	if (isChannel) {
+		if (isUrl) {
+			return 'https://www.youtube.com/channel/UCPzFLpOblZEaIx2lpym1l1A'
+		} else {
+			return 'UCPzFLpOblZEaIx2lpym1l1A'
+		}
+	}
+	// is ID
+	else {
+		if (isUrl) {
+			return 'https://www.youtube.com/watch?v=E3maq9Bqe8Q&list=PLURsDaOr8hWVH4zq-BPRH8bC-o-MTYywk'
+		} else {
+			return 'PLURsDaOr8hWVH4zq-BPRH8bC-o-MTYywk';
+		}
+	}
+
+	return '';
+
+}

@@ -4,11 +4,19 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faSync from '@fortawesome/fontawesome-free-solid/faSync'
 import { isURL, isEmpty } from 'validator';
 
+import { getPlaceHolderTest } from './helpers';
+
 class Form extends React.PureComponent {
 
 	state = {
 		loading: false,
+		placeholder: getPlaceHolderTest('playlistUrl'),
 		errorMessage: '',
+	}
+
+	updatePlaceholder = () => {
+		const placeholder = getPlaceHolderTest(this.refs.option && this.refs.option.value)
+		this.setState({ placeholder });
 	}
 
 	handleSubmit = (e) => {
@@ -29,8 +37,8 @@ class Form extends React.PureComponent {
 		}
 
 		// is id
-		else if (option.includes('Id') && /[^A-Za-z\d]/.test(text)) {
-			return this.setState({ errorMessage: 'Ids should only contain letters and numbers' })
+		else if (option.includes('Id') && /[^A-Za-z\d\-]/.test(text)) {
+			return this.setState({ errorMessage: 'Ids should only contain letters, numbers and dashes' })
 		}
 
 		// all good
@@ -41,7 +49,7 @@ class Form extends React.PureComponent {
 
 	render() {
 
-		const { loading, errorMessage } = this.state;
+		const { loading, errorMessage, placeholder } = this.state;
 
 		const loaderIcon = <FontAwesomeIcon icon={faSync} spin style={{ marginLeft: 10 }} />
 
@@ -49,14 +57,14 @@ class Form extends React.PureComponent {
 			<div className="wrapper">
 				<form onSubmit={this.handleSubmit}>
 					<h3 className="title">YouTube Analyzer</h3>
-					<select ref="option" name="options">
+					<select onChange={this.updatePlaceholder} ref="option" name="options">
 						<option value="playlistUrl">Playlist URL</option>
 						<option value="playlistId">Playlist ID</option>
 						<option value="channelUrl">Channel URL</option>
 						<option value="channelId">Channel ID</option>
 					</select>
 					<div>
-						<input type="text" ref="text" placeholder="https://www.youtube.com/channel/UCoebwHSTvwalADTJhps0emA" />
+						<input type="text" ref="text" placeholder={placeholder} />
 						<span className="form-error is-visible" id="uuid">{errorMessage}</span>
 					</div>
 					<button className="primary button" type="submit">Submit {loading && loaderIcon}</button>

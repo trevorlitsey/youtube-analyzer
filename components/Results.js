@@ -1,5 +1,8 @@
 import React from 'react';
 import { parse, toSeconds } from 'iso8601-duration';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp'
+import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown'
 
 import { secondsToHms } from './helpers';
 
@@ -45,7 +48,7 @@ const Results = (props) => {
 				</thead>
 				<tbody>
 					<tr>
-						<td className="dropdown">{videoDetails.length.toLocaleString()}</td>
+						<td>{videoDetails.length.toLocaleString()}</td>
 						<td>{statistics.viewCount.toLocaleString()}</td>
 						<td>{secondsToHms(Math.round(duration))}</td>
 						<td>{statistics.commentCount.toLocaleString()}</td>
