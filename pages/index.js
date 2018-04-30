@@ -7,26 +7,43 @@ import Layout from '../components/Layout';
 import Form from '../components/Form';
 import Footer from '../components/Footer';
 
-import '../css/foundation.min.css';
+import { getPlaylistIdFromUrl, getChannelIdFromUrl } from '../helpers';
 
 class Index extends React.PureComponent {
 
 	handleSubmit = ({ option, text }) => {
 
+		let query;
+
 		switch (option) {
 			case 'playlistUrl':
-
-			case 'channelUrl':
-
-			case 'channelId':
-				Router.push({
-					pathname: '/search',
-					query: { channelId: text }
-				})
+				const playlistId = getPlaylistIdFromUrl(text);
+				query = { playlistId }
+				break;
 
 			case 'playlistId':
+				query = { playlistId: text }
+				break;
 
+			case 'channelUrl':
+				const channelId = getChannelIdFromUrl(text);
+				query = { channelId }
+				break;
+
+			case 'channelId':
+				query = { channelId: text }
+				break;
 		}
+
+		console.log(query);
+
+
+		// all good
+		Router.push({
+			pathname: '/search',
+			query,
+		})
+
 	}
 
 	render() {

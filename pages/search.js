@@ -1,9 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import Router from 'next/router'
 
-import { getApiUrl, getVideosFromChannelId, processVideoIds } from '../helpers';
+import { getApiUrl, getVideosFromChannelId, processVideoIds, getVideosFromPlaylistId } from '../helpers';
 
 import Layout from '../components/Layout';
+import BadRequest from '../components/BadRequest';
 import Breadcrumbs from '../components/Breadcrumbs';
 import Progress from '../components/Progress';
 import Results from '../components/Results';
@@ -12,17 +14,39 @@ class Search extends React.PureComponent {
 
 	static async getInitialProps({ req, query }) {
 
-		const { channelId } = query;
+		let videoIds;
+		let videoDetails;
 
-		const videoIds = await getVideosFromChannelId(channelId);
-		const videoDetails = await processVideoIds(videoIds)
+		const { channelId, playlistId } = query;
+
+		if (channelId) {
+			videoIds = await getVideosFromChannelId(channelId);
+		} else if (playlistId) {
+			videoIds = await getVideosFromPlaylistId(playlistId);
+		}
+
+		// uh oh
+		if (!videoIds) {
+			return {}
+		}
+
+		videoDetails = await processVideoIds(videoIds);
 
 		return { videoDetails }
 	}
 
 	render() {
 
-		const { videoDetails } = this.props;
+		const { videoDetails, url } = this.props;
+
+		if (!videoDetails.length) {
+			// bad request!
+			return (
+				<Layout>
+					<BadRequest query={url.query.channelId || url.query.playlistId} />
+				</Layout>
+			)
+		}
 
 		return (
 			<Layout>
