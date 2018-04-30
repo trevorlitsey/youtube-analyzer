@@ -1,5 +1,10 @@
 const axios = require('axios');
 
+const getPlaylistIdFromUrl = (url) => {
+	const parsed = getJsonFromUrl(url);
+	return parsed.list;
+}
+
 const getApiUrl = (section, userParams, apiKey = 'AIzaSyAlAtI54mpJ7iDblL-pisPlQr8F6vmTy0A') => {
 
 	const params = {
@@ -58,7 +63,7 @@ const processVideoIds = async (videoIds) => {
 
 	const videoPromises = videoIds.map(page => {
 		const id = page.join(',');
-		const url = getApiUrl('videos', { part: 'statistics', id })
+		const url = getApiUrl('videos', { part: 'statistics,snippet,recordingDetails', id })
 		return axios.get(url)
 	})
 
@@ -74,9 +79,28 @@ const processVideoIds = async (videoIds) => {
 }
 
 const helpers = {
+	getPlaylistIdFromUrl,
 	getApiUrl,
 	getVideosFromChannelId,
 	processVideoIds,
 }
 
 module.exports = helpers;
+
+
+
+
+
+
+
+
+// ********
+function getJsonFromUrl(url) {
+	var query = url.split('?')[1];
+	var result = {};
+	query.split("&").forEach(function (part) {
+		var item = part.split("=");
+		result[item[0]] = decodeURIComponent(item[1]);
+	});
+	return result;
+}

@@ -4,7 +4,7 @@ import { Menu, MenuItem } from 'react-foundation';
 import styled from 'styled-components';
 
 const contentStyles = {
-	maxWidth: 700,
+	maxWidth: 1000,
 	margin: 'auto',
 	padding: '50px 10px',
 }
