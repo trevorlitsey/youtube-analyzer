@@ -1,9 +1,18 @@
+// @flow
+
 import React from 'react';
 import Link from 'next/link'
 
 import Layout from '../components/Layout';
 
-const BadRequest = ({ query }) => {
+type Props = {
+	query: string,
+}
+
+const BadRequest = (props: Props) => {
+
+	const { query } = props;
+
 	return (
 		<div>
 			<h4>Sorry, your search for <code>{query}</code> didn't match any results.</h4>

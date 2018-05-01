@@ -2,13 +2,20 @@ import React from 'react';
 import axios from 'axios';
 import Router from 'next/router'
 
-import { getApiUrl, getVideosFromChannelId, processVideoIds, getVideosFromPlaylistId } from '../helpers';
+import {
+	getApiUrl,
+	getVideosFromChannelId,
+	processVideoIds,
+	getVideosFromPlaylistId,
+	getVideoTotals
+} from '../helpers';
 
 import Layout from '../components/Layout';
 import BadRequest from '../components/BadRequest';
 import Breadcrumbs from '../components/Breadcrumbs';
 import Progress from '../components/Progress';
-import Results from '../components/Results';
+import VideoTotals from '../components/VideoTotals';
+import VideoList from '../components/VideoList'
 
 class Search extends React.PureComponent {
 
@@ -31,13 +38,14 @@ class Search extends React.PureComponent {
 		}
 
 		videoDetails = await processVideoIds(videoIds);
+		const videoTotals = getVideoTotals(videoDetails);
 
-		return { videoDetails }
+		return { videoDetails, videoTotals }
 	}
 
 	render() {
 
-		const { videoDetails, url } = this.props;
+		const { videoDetails, videoTotals, url } = this.props;
 
 		if (!videoDetails.length) {
 			// bad request!
@@ -50,9 +58,10 @@ class Search extends React.PureComponent {
 
 		return (
 			<Layout>
-				<Breadcrumbs />
-				<h2 style={{ textDecoration: 'underline' }}>{videoDetails[0].snippet.channelTitle}</h2>
-				<Results videoDetails={videoDetails} />
+				<Breadcrumbs pages={['home', 'search']} />
+				<h2 style={{ textDecoration: 'underline' }}>{videoDetails[0].channelTitle}</h2>
+				<VideoTotals {...videoTotals} />
+				<VideoList videoDetails={videoDetails} />
 			</Layout>
 		)
 	}

@@ -1,4 +1,4 @@
-
+// @flow
 
 import React from 'react';
 import Router from 'next/router'
@@ -9,9 +9,9 @@ import Footer from '../components/Footer';
 
 import { getPlaylistIdFromUrl, getChannelIdFromUrl } from '../helpers';
 
-class Index extends React.PureComponent {
+class Index extends React.PureComponent<{}> {
 
-	handleSubmit = ({ option, text }) => {
+	handleSubmit = ({ option, text }: { option: string, text: string }) => {
 
 		let query;
 
@@ -34,9 +34,6 @@ class Index extends React.PureComponent {
 				query = { channelId: text }
 				break;
 		}
-
-		console.log(query);
-
 
 		// all good
 		Router.push({

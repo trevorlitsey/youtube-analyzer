@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import propTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
@@ -6,7 +8,17 @@ import { isURL, isEmpty } from 'validator';
 
 import { getPlaceHolderTest } from './helpers';
 
-class Form extends React.PureComponent {
+type Props = {
+	handleSubmit: any,
+}
+
+type State = {
+	loading: boolean,
+	placeholder: string,
+	errorMessage: string,
+}
+
+class Form extends React.PureComponent<Props, State> {
 
 	state = {
 		loading: false,
@@ -19,7 +31,7 @@ class Form extends React.PureComponent {
 		this.setState({ placeholder });
 	}
 
-	handleSubmit = (e) => {
+	handleSubmit = (e: SyntheticEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 
 		const option = this.refs.option.value

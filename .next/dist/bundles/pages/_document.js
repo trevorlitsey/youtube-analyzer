@@ -116,8 +116,7 @@ var MyDocument = function (_Document) {
 		value: function render() {
 			return _react2.default.createElement(
 				"html",
-				{
-					__source: {
+				{ lang: "en", __source: {
 						fileName: _jsxFileName,
 						lineNumber: 7
 					}
@@ -130,9 +129,24 @@ var MyDocument = function (_Document) {
 							lineNumber: 8
 						}
 					},
-					_react2.default.createElement("link", { rel: "stylesheet", href: "/static/foundation.min.css", __source: {
+					_react2.default.createElement("meta", { charSet: "UTF-8", __source: {
 							fileName: _jsxFileName,
 							lineNumber: 9
+						}
+					}),
+					_react2.default.createElement("meta", { name: "viewport", content: "width=device-width, initial-scale=1.0", __source: {
+							fileName: _jsxFileName,
+							lineNumber: 10
+						}
+					}),
+					_react2.default.createElement("meta", { httpEquiv: "X-UA-Compatible", content: "ie=edge", __source: {
+							fileName: _jsxFileName,
+							lineNumber: 11
+						}
+					}),
+					_react2.default.createElement("link", { rel: "stylesheet", href: "/static/foundation.min.css", __source: {
+							fileName: _jsxFileName,
+							lineNumber: 12
 						}
 					}),
 					_react2.default.createElement(
@@ -140,14 +154,14 @@ var MyDocument = function (_Document) {
 						{
 							__source: {
 								fileName: _jsxFileName,
-								lineNumber: 10
+								lineNumber: 13
 							}
 						},
 						"YouTube Analyzer"
 					),
 					_react2.default.createElement("link", { rel: "icon", type: "image/ico", href: "/static/favicon.ico", __source: {
 							fileName: _jsxFileName,
-							lineNumber: 11
+							lineNumber: 14
 						}
 					})
 				),
@@ -156,19 +170,19 @@ var MyDocument = function (_Document) {
 					{
 						__source: {
 							fileName: _jsxFileName,
-							lineNumber: 13
+							lineNumber: 16
 						}
 					},
 					_react2.default.createElement(_document.Main, {
 						__source: {
 							fileName: _jsxFileName,
-							lineNumber: 14
+							lineNumber: 17
 						}
 					}),
 					_react2.default.createElement(_document.NextScript, {
 						__source: {
 							fileName: _jsxFileName,
-							lineNumber: 15
+							lineNumber: 18
 						}
 					})
 				)

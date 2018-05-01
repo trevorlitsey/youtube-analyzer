@@ -1,4 +1,6 @@
 const axios = require('axios');
+const iso = require('iso8601-duration')
+const { parse, toSeconds } = iso;
 
 const getPlaylistIdFromUrl = (url) => {
 	const parsed = getJsonFromUrl(url);
@@ -116,7 +118,55 @@ const processVideoIds = async (videoIds) => {
 		.map(res => res.items)
 		.forEach(page => videoDetails.push(...page));
 
-	return videoDetails
+	const reducedDetails = reduceDetails(videoDetails)
+
+	return reducedDetails
+
+	//--------------
+	function reduceDetails(videoDetails) {
+
+		const reduced = []
+		videoDetails.forEach(video => {
+			reduced.push({
+				id: video.id,
+				channelTitle: video.snippet.channelTitle,
+				title: video.snippet.title,
+				publishedAt: video.snippet.publishedAt,
+				viewCount: video.statistics.viewCount,
+				duration: video.contentDetails.duration,
+				commentCount: video.statistics.commentCount,
+				likeCount: video.statistics.likeCount,
+				dislikeCount: video.statistics.dislikeCount,
+			})
+		})
+
+		return reduced;
+
+	}
+
+}
+
+
+export function getVideoTotals(videoDetails: Array<any>) {
+	const statistics = {
+		viewCount: 0,
+		commentCount: 0,
+		likeCount: 0,
+		dislikeCount: 0,
+		duration: 0,
+		totalVideos: videoDetails.length,
+	}
+
+	videoDetails.forEach((video) => {
+		Object.entries(video).forEach(([key, value]) => {
+			statistics[key] = statistics[key] + Number(value);
+		})
+	})
+
+	statistics.duration = videoDetails.reduce((acc, video) =>
+		acc += toSeconds(parse(video.duration)), 0)
+
+	return statistics;
 }
 
 const helpers = {
@@ -126,6 +176,7 @@ const helpers = {
 	getVideosFromChannelId,
 	getVideosFromPlaylistId,
 	processVideoIds,
+	getVideoTotals,
 }
 
 module.exports = helpers;

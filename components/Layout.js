@@ -1,9 +1,15 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import Link from 'next/link'
 import { Menu, MenuItem } from 'react-foundation';
 import styled from 'styled-components';
 
-const Layout = ({ children }) => {
+type Props = {
+	children?: React.Node,
+};
+
+const Layout = ({ children }: Props) => {
 	return (
 		<div>
 			<Menu className="top-bar">
@@ -15,7 +21,7 @@ const Layout = ({ children }) => {
 			<style jsx>{`
 
 			.wrapper {
-				max-width: 1000px;
+				max-width: 1200px;
 				margin: auto;
 				padding: 50px 10px;
 			}
