@@ -30,13 +30,14 @@ const getApiUrl = (section, userParams, apiKey = 'AIzaSyAlAtI54mpJ7iDblL-pisPlQr
 
 }
 
-const getResultPages = async (url, params) => {
+const getResultPages = async (apiSection, params) => {
 
 	const resultPages = [];
+	const firstUrl = getApiUrl(apiSection, params)
 
 	// get first one
 	await axios
-		.get(url)
+		.get(firstUrl)
 		.then(res => resultPages.push(res.data))
 		.catch(err => console.error(err));
 
@@ -45,8 +46,8 @@ const getResultPages = async (url, params) => {
 
 			params.pageToken = resultPages[resultPages.length - 1].nextPageToken
 
-			const url = getApiUrl('search', params)
-			const newPage = await axios.get(url).then(res => res.data).catch(err => console.error(err))
+			const nextUrl = getApiUrl(apiSection, params)
+			const newPage = await axios.get(nextUrl).then(res => res.data).catch(err => console.error(err))
 			resultPages.push(newPage);
 
 		}
@@ -63,9 +64,7 @@ const getVideosFromPlaylistId = async (playlistId) => {
 		part: 'contentDetails,snippet',
 	}
 
-	const url = getApiUrl('playlistItems', params)
-
-	const resultPages = await getResultPages(url, params)
+	const resultPages = await getResultPages('playlistItems', params)
 
 	// video ids in [50, 50, remaining]
 	const videoIds = resultPages
@@ -86,9 +85,7 @@ const getVideosFromChannelId = async (channelId) => {
 		channelId,
 	}
 
-	const url = getApiUrl('search', params)
-
-	const resultPages = await getResultPages(url, params);
+	const resultPages = await getResultPages('search', params);
 
 	if (resultPages.length) {
 		// video ids in [50, 50, remaining]
