@@ -3,7 +3,7 @@
 Get total views/duration/likes and more for Youtube playlists and channels.
 
 <img src="./screenshots/search.png"
-     alt="Markdown Monster icon"
+     alt="snapshot of search page"
      style="float: left; margin: 10px 0 30px;">
 
 ## Getting Started
