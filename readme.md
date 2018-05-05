@@ -2,6 +2,10 @@
 
 Get total views/duration/likes and more for Youtube playlists and channels.
 
+<img src="./screenshots/search.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin: 10px 0 30px;">
+
 ## Getting Started
 ```
 git clone
@@ -15,7 +19,7 @@ npm run dev
 npm run test
 ```
 
-### Tech
+## Tech
 - [React](https://reactjs.org/)
 - [Next.js](https://nextjs.org/)
 - [YouTube API](https://developers.google.com/youtube/)
