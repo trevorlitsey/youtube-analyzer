@@ -25,9 +25,9 @@ const VideoTotals = (props: Props) => {
 						<th>Total videos</th>
 						<th>Total views</th>
 						<th>Total duration</th>
-						<th>Total comments</th>
-						<th>Total likes</th>
-						<th>Total dislikes</th>
+						<th className="hide-when-extra-extra-small">Total comments</th>
+						<th className="hide-when-extra-small">Total likes</th>
+						<th className="hide-when-small">Total dislikes</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -35,12 +35,33 @@ const VideoTotals = (props: Props) => {
 						<td>{totalVideos && totalVideos.toLocaleString()}</td>
 						<td>{viewCount && viewCount.toLocaleString()}</td>
 						<td>{duration && secondsToHms(Math.round(duration))}</td>
-						<td>{commentCount && commentCount.toLocaleString()}</td>
-						<td>{likeCount && likeCount.toLocaleString()}</td>
-						<td>{dislikeCount && dislikeCount.toLocaleString()}</td>
+						<td className="hide-when-extra-extra-small">{commentCount && commentCount.toLocaleString()}</td>
+						<td className="hide-when-extra-small">{likeCount && likeCount.toLocaleString()}</td>
+						<td className="hide-when-small">{dislikeCount && dislikeCount.toLocaleString()}</td>
 					</tr>
 				</tbody>
 			</table>
+			<style jsx>{`
+
+			@media (max-width: 680px) {
+				.hide-when-small {
+					display: none;
+				}
+			}
+
+			@media (max-width: 600px) {
+				.hide-when-extra-small {
+					display: none;
+				}
+			}
+
+			@media (max-width: 540px) {
+				.hide-when-extra-extra-small {
+					display: none;
+				}
+			}
+
+			`}</style>
 		</div>
 	)
 }

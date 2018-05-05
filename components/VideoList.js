@@ -83,7 +83,7 @@ class VideoList extends React.Component<Props, State> {
 				<table>
 					<thead>
 						<tr>
-							<th>#</th>
+							<th className="hide-at-430">#</th>
 							<th onClick={() => this.updateOrder('publishedAt')}>
 								Release date {sortColumn === 'publishedAt' && sortIcon}
 							</th>
@@ -96,13 +96,13 @@ class VideoList extends React.Component<Props, State> {
 							<th onClick={() => this.updateOrder('duration')}>
 								Duration {sortColumn === 'duration' && sortIcon}
 							</th>
-							<th onClick={() => this.updateOrder('commentCount')}>
+							<th className="hide-at-540" onClick={() => this.updateOrder('commentCount')}>
 								Comments {sortColumn === 'commentCount' && sortIcon}
 							</th>
-							<th onClick={() => this.updateOrder('likeCount')}>
+							<th className="hide-at-600" onClick={() => this.updateOrder('likeCount')}>
 								Likes	{sortColumn === 'likeCount' && sortIcon}
 							</th>
-							<th onClick={() => this.updateOrder('dislikeCount')}>
+							<th className="hide-at-680" onClick={() => this.updateOrder('dislikeCount')}>
 								Dislikes {sortColumn === 'dislikeCount' && sortIcon}
 							</th>
 						</tr>
@@ -112,14 +112,14 @@ class VideoList extends React.Component<Props, State> {
 							.sort(this.sort)
 							.map((video, index) =>
 								<tr key={video.id}>
-									<td>{index + 1}</td>
-									<td>{format(video.publishedAt, 'YYYY.MM.DD')}</td>
+									<td className="hide-at-430">{index + 1}</td>
+									<td>{format(video.publishedAt, 'YY.MM.DD')}</td>
 									<td><a href={`https://www.youtube.com/watch?v=${video.id}`} target="blank">{video.title}</a></td>
 									<td>{Number(video.viewCount).toLocaleString()}</td>
 									<td>{secondsToHms(Math.round(toSeconds(parse(video.duration))))}</td>
-									<td>{Number(video.commentCount).toLocaleString()}</td>
-									<td>{Number(video.likeCount).toLocaleString()}</td>
-									<td>{Number(video.dislikeCount).toLocaleString()}</td>
+									<td className="hide-at-540">{Number(video.commentCount).toLocaleString()}</td>
+									<td className="hide-at-600">{Number(video.likeCount).toLocaleString()}</td>
+									<td className="hide-at-680">{Number(video.dislikeCount).toLocaleString()}</td>
 								</tr>
 							)}
 					</tbody>
@@ -128,6 +128,30 @@ class VideoList extends React.Component<Props, State> {
 
 						th:hover {
 							cursor: pointer;
+						}
+
+						@media (max-width: 680px) {
+							.hide-at-680 {
+								display: none;
+							}
+						}
+
+						@media (max-width: 600px) {
+							.hide-at-600 {
+								display: none;
+							}
+						}
+
+						@media (max-width: 540px) {
+							.hide-at-540 {
+								display: none;
+							}
+						}
+
+						@media (max-width: 430px) {
+							.hide-at-430 {
+								display: none;
+							}
 						}
 
 				`}</style>
