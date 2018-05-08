@@ -10,6 +10,8 @@ import { format } from 'date-fns';
 import { secondsToHms } from './helpers';
 import { Video } from './types';
 
+import VideoListRow from './VideoListRow';
+
 type Props = {
 	videoDetails: Array<any>,
 }
@@ -111,16 +113,7 @@ class VideoList extends React.Component<Props, State> {
 						{videoDetails
 							.sort(this.sort)
 							.map((video, index) =>
-								<tr key={video.id}>
-									<td className="hide-at-430">{index + 1}</td>
-									<td>{format(video.publishedAt, 'YY.MM.DD')}</td>
-									<td><a href={`https://www.youtube.com/watch?v=${video.id}`} target="blank">{video.title}</a></td>
-									<td>{Number(video.viewCount).toLocaleString()}</td>
-									<td>{secondsToHms(Math.round(toSeconds(parse(video.duration))))}</td>
-									<td className="hide-at-540">{Number(video.commentCount).toLocaleString()}</td>
-									<td className="hide-at-600">{Number(video.likeCount).toLocaleString()}</td>
-									<td className="hide-at-680">{Number(video.dislikeCount).toLocaleString()}</td>
-								</tr>
+								<VideoListRow key={video.id} {...video} index={index} />
 							)}
 					</tbody>
 				</table>
