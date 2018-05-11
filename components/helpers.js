@@ -1,4 +1,6 @@
 // @flow
+import React from 'react';
+
 import { parse, toSeconds } from 'iso8601-duration';
 
 import { Video } from './types';
@@ -40,3 +42,33 @@ export function getPlaceHolderTest(optionValue: string = '') {
 	return '';
 
 }
+
+export const tableMediaQueries = <style jsx>{`
+	@media (max-width: 700px) {
+			.break-point-lg {
+				display: none;
+			}
+			.info { 
+				display: block;
+			}
+		}
+
+		@media (max-width: 600px) {
+			.break-point-md {
+				display: none;
+			}
+		}
+
+		@media (max-width: 540px) {
+			.break-point-sm {
+				display: none;
+			}
+		}
+
+		@media (max-width: 430px) {
+			.break-point-xs {
+				display: none;
+			}
+		}
+
+`}</style>

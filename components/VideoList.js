@@ -7,7 +7,7 @@ import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown'
 import { parse, toSeconds } from 'iso8601-duration';
 import { format } from 'date-fns';
 
-import { secondsToHms } from './helpers';
+import { secondsToHms, tableMediaQueries } from './helpers';
 import { Video } from './types';
 
 import VideoListRow from './VideoListRow';
@@ -85,7 +85,7 @@ class VideoList extends React.Component<Props, State> {
 				<table>
 					<thead>
 						<tr>
-							<th className="hide-at-430">#</th>
+							<th className="break-point-xs">#</th>
 							<th onClick={() => this.updateOrder('publishedAt')}>
 								Release date {sortColumn === 'publishedAt' && sortIcon}
 							</th>
@@ -98,13 +98,13 @@ class VideoList extends React.Component<Props, State> {
 							<th onClick={() => this.updateOrder('duration')}>
 								Duration {sortColumn === 'duration' && sortIcon}
 							</th>
-							<th className="hide-at-540" onClick={() => this.updateOrder('commentCount')}>
+							<th className="break-point-sm" onClick={() => this.updateOrder('commentCount')}>
 								Comments {sortColumn === 'commentCount' && sortIcon}
 							</th>
-							<th className="hide-at-600" onClick={() => this.updateOrder('likeCount')}>
+							<th className="break-point-md" onClick={() => this.updateOrder('likeCount')}>
 								Likes	{sortColumn === 'likeCount' && sortIcon}
 							</th>
-							<th className="hide-at-680" onClick={() => this.updateOrder('dislikeCount')}>
+							<th className="break-point-lg" onClick={() => this.updateOrder('dislikeCount')}>
 								Dislikes {sortColumn === 'dislikeCount' && sortIcon}
 							</th>
 						</tr>
@@ -123,31 +123,8 @@ class VideoList extends React.Component<Props, State> {
 							cursor: pointer;
 						}
 
-						@media (max-width: 680px) {
-							.hide-at-680 {
-								display: none;
-							}
-						}
-
-						@media (max-width: 600px) {
-							.hide-at-600 {
-								display: none;
-							}
-						}
-
-						@media (max-width: 540px) {
-							.hide-at-540 {
-								display: none;
-							}
-						}
-
-						@media (max-width: 430px) {
-							.hide-at-430 {
-								display: none;
-							}
-						}
-
 				`}</style>
+				{tableMediaQueries}
 			</div>
 		)
 	}

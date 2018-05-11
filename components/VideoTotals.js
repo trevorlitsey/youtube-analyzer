@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { secondsToHms } from './helpers';
+import { secondsToHms, tableMediaQueries } from './helpers';
 
 type Props = {
 	totalVideos: number,
@@ -18,16 +18,19 @@ const VideoTotals = (props: Props) => {
 
 	return (
 		<div>
-			<h4>Totals</h4>
+			<div className="container">
+				<h4>Totals</h4>
+				<p className="info">(expand window to see more stats -->)</p>
+			</div>
 			<table>
 				<thead>
 					<tr>
 						<th>Total videos</th>
 						<th>Total views</th>
 						<th>Total duration</th>
-						<th className="hide-when-extra-extra-small">Total comments</th>
-						<th className="hide-when-extra-small">Total likes</th>
-						<th className="hide-when-small">Total dislikes</th>
+						<th className="break-point-sm">Total comments</th>
+						<th className="break-point-md">Total likes</th>
+						<th className="break-point-lg">Total dislikes</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -35,33 +38,30 @@ const VideoTotals = (props: Props) => {
 						<td>{totalVideos && totalVideos.toLocaleString()}</td>
 						<td>{viewCount && viewCount.toLocaleString()}</td>
 						<td>{duration && secondsToHms(Math.round(duration))}</td>
-						<td className="hide-when-extra-extra-small">{commentCount && commentCount.toLocaleString()}</td>
-						<td className="hide-when-extra-small">{likeCount && likeCount.toLocaleString()}</td>
-						<td className="hide-when-small">{dislikeCount && dislikeCount.toLocaleString()}</td>
+						<td className="break-point-sm">{commentCount && commentCount.toLocaleString()}</td>
+						<td className="break-point-md">{likeCount && likeCount.toLocaleString()}</td>
+						<td className="break-point-lg">{dislikeCount && dislikeCount.toLocaleString()}</td>
 					</tr>
 				</tbody>
 			</table>
 			<style jsx>{`
-
-			@media (max-width: 680px) {
-				.hide-when-small {
-					display: none;
+				.container {
+					display: flex;
+					justify-content: space-between;	
 				}
-			}
 
-			@media (max-width: 600px) {
-				.hide-when-extra-small {
-					display: none;
+				.info {
+					color: gray;
 				}
-			}
 
-			@media (max-width: 540px) {
-				.hide-when-extra-extra-small {
-					display: none;
+				@media (min-width: 700px) {
+					.info {
+						display: none;
+					}
 				}
-			}
 
 			`}</style>
+			{tableMediaQueries}
 		</div>
 	)
 }
