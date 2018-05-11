@@ -35,12 +35,12 @@ const VideoTotals = (props: Props) => {
 				</thead>
 				<tbody>
 					<tr>
-						<td>{totalVideos && totalVideos.toLocaleString()}</td>
-						<td>{viewCount && viewCount.toLocaleString()}</td>
-						<td>{duration && secondsToHms(Math.round(duration))}</td>
-						<td className="break-point-sm">{commentCount && commentCount.toLocaleString()}</td>
-						<td className="break-point-md">{likeCount && likeCount.toLocaleString()}</td>
-						<td className="break-point-lg">{dislikeCount && dislikeCount.toLocaleString()}</td>
+						<td>{totalVideos ? totalVideos.toLocaleString() : '–'}</td>
+						<td>{viewCount ? viewCount.toLocaleString() : '–'}</td>
+						<td>{duration ? secondsToHms(Math.round(duration)) : '–'}</td>
+						<td className="break-point-sm">{commentCount ? commentCount.toLocaleString() : '–'}</td>
+						<td className="break-point-md">{likeCount ? likeCount.toLocaleString() : '–'}</td>
+						<td className="break-point-lg">{dislikeCount ? dislikeCount.toLocaleString() : '–'}</td>
 					</tr>
 				</tbody>
 			</table>

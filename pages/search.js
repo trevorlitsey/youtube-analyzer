@@ -7,7 +7,7 @@ import {
 	getVideosFromChannelId,
 	processVideoIds,
 	getVideosFromPlaylistId,
-	getVideoTotals
+	getVideoTotals,
 } from '../helpers';
 
 import Layout from '../components/Layout';
@@ -23,6 +23,7 @@ class Search extends React.PureComponent {
 
 		let videoIds;
 		let videoDetails;
+		let playlistName;
 
 		const { channelId, playlistId } = query;
 
@@ -40,12 +41,12 @@ class Search extends React.PureComponent {
 		videoDetails = await processVideoIds(videoIds);
 		const videoTotals = getVideoTotals(videoDetails);
 
-		return { videoDetails, videoTotals }
+		return { videoDetails, videoTotals, channelId, playlistId }
 	}
 
 	render() {
 
-		const { videoDetails, videoTotals, url } = this.props;
+		const { videoDetails, videoTotals, url, channelId, playlistId } = this.props;
 
 		if (!videoDetails.length) {
 			// bad request!
@@ -60,6 +61,10 @@ class Search extends React.PureComponent {
 			<Layout>
 				<Breadcrumbs pages={['home', 'search']} />
 				<h2 style={{ textDecoration: 'underline' }}>{videoDetails[0].channelTitle}</h2>
+				<h5>
+					{channelId && 'Channel: ' + channelId}
+					{playlistId && 'Playlist: ' + playlistId}
+				</h5>
 				<VideoTotals {...videoTotals} />
 				<VideoList videoDetails={videoDetails} />
 			</Layout>
