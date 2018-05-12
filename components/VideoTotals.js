@@ -20,7 +20,7 @@ const VideoTotals = (props: Props) => {
 		<div>
 			<div className="container">
 				<h4>Totals</h4>
-				<p className="info">(expand window to see more stats -->)</p>
+				<p className="info">expand window to see more stats --></p>
 			</div>
 			<table>
 				<thead>

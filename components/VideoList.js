@@ -8,7 +8,7 @@ import { parse, toSeconds } from 'iso8601-duration';
 import { format } from 'date-fns';
 
 import { secondsToHms, tableMediaQueries } from './helpers';
-import { Video } from './types';
+import type { Video } from './types';
 
 import VideoListRow from './VideoListRow';
 

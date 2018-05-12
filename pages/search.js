@@ -44,11 +44,33 @@ class Search extends React.PureComponent {
 		return { videoDetails, videoTotals, channelId, playlistId }
 	}
 
+	componentDidMount = () => {
+		const { channelId, playlistId, videoDetails } = this.props;
+
+		const id = channelId || playlistId;
+
+		if (videoDetails && videoDetails.length) {
+			const recentSearches = JSON.parse(window.localStorage.getItem('youtubeAnalyzer') || '{}');
+
+			if (!recentSearches[id]) {
+				recentSearches[id] = {
+					id,
+					channelTitle: videoDetails[0].channelTitle || '',
+					type: channelId ? 'channelId' : 'playlistId',
+					date: Date.now(),
+				}
+			} else {
+				recentSearches[id].date = Date.now();
+			}
+			window.localStorage.setItem('youtubeAnalyzer', JSON.stringify(recentSearches));
+		}
+	}
+
 	render() {
 
 		const { videoDetails, videoTotals, url, channelId, playlistId } = this.props;
 
-		if (!videoDetails.length) {
+		if (!videoDetails || !videoDetails.length) {
 			// bad request!
 			return (
 				<Layout>
@@ -62,8 +84,8 @@ class Search extends React.PureComponent {
 				<Breadcrumbs pages={['home', 'search']} />
 				<h2 style={{ textDecoration: 'underline' }}>{videoDetails[0].channelTitle}</h2>
 				<h5>
-					{channelId && 'Channel: ' + channelId}
-					{playlistId && 'Playlist: ' + playlistId}
+					{channelId ? 'Channel: ' + channelId : ''}
+					{playlistId ? 'Playlist: ' + playlistId : ''}
 				</h5>
 				<VideoTotals {...videoTotals} />
 				<VideoList videoDetails={videoDetails} />

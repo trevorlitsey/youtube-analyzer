@@ -1,3 +1,5 @@
+// @flow
+
 export type Video = {
 	id: string,
 	channelTitle: string,
@@ -8,4 +10,15 @@ export type Video = {
 	commentCount: number,
 	likeCount: number,
 	dislikeCount: number,
+}
+
+export type RecentSearchItem = {
+	id: string,
+	channelTitle: string,
+	type: string,
+	date: number,
+}
+
+export type RecentSearches = {
+	[id: string]: RecentSearchItem
 }

@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Link from 'next/link'
 import { Menu, MenuItem } from 'react-foundation';
-import styled from 'styled-components';
 
 type Props = {
 	children?: React.Node,

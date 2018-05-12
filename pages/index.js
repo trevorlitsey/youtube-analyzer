@@ -5,11 +5,27 @@ import Router from 'next/router'
 
 import Layout from '../components/Layout';
 import Form from '../components/Form';
+import RecentSearches from '../components/RecentSearches';
 import Footer from '../components/Footer';
 
 import { getPlaylistIdFromUrl, getChannelIdFromUrl } from '../helpers';
 
-class Index extends React.PureComponent<{}> {
+import type { RecentSearches as RecentSearchesType } from '../components/types';
+
+type State = {
+	recentSearches: RecentSearchesType
+}
+
+class Index extends React.PureComponent<{}, State> {
+
+	state = {
+		recentSearches: {}
+	}
+
+	componentDidMount = () => {
+		const recentSearches = JSON.parse(window.localStorage.getItem('youtubeAnalyzer') || '{}');
+		this.setState({ recentSearches })
+	}
 
 	handleSubmit = ({ option, text }: { option: string, text: string }) => {
 
@@ -44,9 +60,13 @@ class Index extends React.PureComponent<{}> {
 	}
 
 	render() {
+
+		const { recentSearches } = this.state;
+
 		return (
 			<Layout>
 				<Form handleSubmit={this.handleSubmit} />
+				<RecentSearches recentSearches={recentSearches} />
 				<Footer />
 			</Layout>
 		)
