@@ -8,7 +8,6 @@ Get total views/duration/likes and more for Youtube playlists and channels.
 
 ## Getting Started
 ```
-git clone
 npm install
 npm run dev
 --> localhost:3000
