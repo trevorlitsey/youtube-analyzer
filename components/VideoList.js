@@ -1,133 +1,140 @@
 // @flow
 
-import React from 'react';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome'
-import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp'
-import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown'
-import { parse, toSeconds } from 'iso8601-duration';
-import { format } from 'date-fns';
+import React from "react";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faSortUp from "@fortawesome/fontawesome-free-solid/faSortUp";
+import faSortDown from "@fortawesome/fontawesome-free-solid/faSortDown";
+import { parse, toSeconds } from "iso8601-duration";
+import { format } from "date-fns";
 
-import { secondsToHms, tableMediaQueries } from './helpers';
-import type { Video } from './types';
+import { secondsToHms, tableMediaQueries } from "./helpers";
+import type { Video } from "./types";
 
-import VideoListRow from './VideoListRow';
+import VideoListRow from "./VideoListRow";
 
 type Props = {
-	videoDetails: Array<any>,
-}
+  videoDetails: Array<any>,
+};
 
 type State = {
-	sortColumn: string,
-	sortDirection: boolean,
-}
+  sortColumn: string,
+  sortDirection: boolean,
+};
 
 class VideoList extends React.Component<Props, State> {
+  state = {
+    sortColumn: "publishedAt",
+    sortDirection: true,
+  };
 
-	state = {
-		sortColumn: 'publishedAt',
-		sortDirection: true,
-	}
+  updateOrder = (key: string) => {
+    const { sortColumn, sortDirection } = { ...this.state };
+    if (key === sortColumn) {
+      this.setState({ sortDirection: !sortDirection });
+    } else {
+      this.setState({ sortColumn: key, sortDirection: true });
+    }
+  };
 
-	updateOrder = (key: string) => {
-		const { sortColumn, sortDirection } = { ...this.state };
-		if (key === sortColumn) {
-			this.setState({ sortDirection: !sortDirection })
-		} else {
-			this.setState({ sortColumn: key, sortDirection: true })
-		}
-	}
+  sort = (a: Video, b: Video) => {
+    const { sortColumn, sortDirection } = this.state;
 
-	sort = (a: Video, b: Video) => {
+    let result;
 
-		const { sortColumn, sortDirection } = this.state;
+    switch (sortColumn) {
+      case "publishedAt":
+        result = sortDirection
+          ? new Date(a.publishedAt) - new Date(b.publishedAt)
+          : new Date(b.publishedAt) - new Date(a.publishedAt);
+        break;
+      case "title":
+        if (sortDirection) {
+          result = a.title.toUpperCase() > b.title.toUpperCase() ? 1 : -1;
+        } else {
+          result = a.title.toUpperCase() < b.title.toUpperCase() ? 1 : -1;
+        }
+        break;
+      case "duration":
+        const [one, two] = [
+          Math.round(toSeconds(parse(a.duration))),
+          Math.round(toSeconds(parse(b.duration))),
+        ];
+        result = sortDirection ? one - two : two - one;
+        break;
+      default:
+        result = sortDirection
+          ? a[sortColumn] - b[sortColumn]
+          : b[sortColumn] - a[sortColumn];
+    }
 
-		let result;
+    return result;
+  };
 
-		switch (sortColumn) {
-			case 'publishedAt':
-				result = sortDirection ? new Date(a.publishedAt) - new Date(b.publishedAt) : new Date(b.publishedAt) - new Date(a.publishedAt)
-				break;
-			case 'title':
-				if (sortDirection) {
-					result = a.title.toUpperCase() > b.title.toUpperCase() ? 1 : -1
-				} else {
-					result = a.title.toUpperCase() < b.title.toUpperCase() ? 1 : -1
-				}
-				break;
-			case 'duration':
-				const [one, two] = [Math.round(toSeconds(parse(a.duration))), Math.round(toSeconds(parse(b.duration)))]
-				result = sortDirection ? one - two : two - one;
-				break;
-			default:
-				result = sortDirection ? a[sortColumn] - b[sortColumn] : b[sortColumn] - a[sortColumn]
-		}
+  render() {
+    const { videoDetails } = { ...this.props };
+    const { sortColumn, sortDirection } = this.state;
 
-		return result;
+    const sortIcon = (
+      <FontAwesomeIcon icon={sortDirection ? faSortDown : faSortUp} />
+    );
 
-	}
+    if (!videoDetails) {
+      return <p>no data yet</p>;
+    }
 
-	render() {
+    return (
+      <div>
+        <h4>Details</h4>
+        <div className="overflow-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th onClick={() => this.updateOrder("publishedAt")}>
+                  Release date {sortColumn === "publishedAt" && sortIcon}
+                </th>
+                <th onClick={() => this.updateOrder("title")}>
+                  Title {sortColumn === "title" && sortIcon}
+                </th>
+                <th onClick={() => this.updateOrder("viewCount")}>
+                  Views {sortColumn === "viewCount" && sortIcon}
+                </th>
+                <th onClick={() => this.updateOrder("duration")}>
+                  Duration {sortColumn === "duration" && sortIcon}
+                </th>
+                <th onClick={() => this.updateOrder("commentCount")}>
+                  Comments {sortColumn === "commentCount" && sortIcon}
+                </th>
+                <th onClick={() => this.updateOrder("likeCount")}>
+                  Likes {sortColumn === "likeCount" && sortIcon}
+                </th>
+                <th onClick={() => this.updateOrder("dislikeCount")}>
+                  Dislikes {sortColumn === "dislikeCount" && sortIcon}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {videoDetails
+                .sort(this.sort)
+                .map((video, index) => (
+                  <VideoListRow key={video.id} {...video} index={index} />
+                ))}
+            </tbody>
+          </table>
+        </div>
+        <style jsx>{`
+          th:hover {
+            cursor: pointer;
+          }
 
-		const { videoDetails } = { ...this.props };
-		const { sortColumn, sortDirection } = this.state;
-
-		const sortIcon = <FontAwesomeIcon icon={sortDirection ? faSortDown : faSortUp} />
-
-		if (!videoDetails) {
-			return (
-				<p>no data yet</p>
-			)
-		}
-
-		return (
-			<div>
-				<h4>Details</h4>
-				<table>
-					<thead>
-						<tr>
-							<th className="break-point-xs">#</th>
-							<th onClick={() => this.updateOrder('publishedAt')}>
-								Release date {sortColumn === 'publishedAt' && sortIcon}
-							</th>
-							<th onClick={() => this.updateOrder('title')}>
-								Title {sortColumn === 'title' && sortIcon}
-							</th>
-							<th onClick={() => this.updateOrder('viewCount')}>
-								Views {sortColumn === 'viewCount' && sortIcon}
-							</th>
-							<th onClick={() => this.updateOrder('duration')}>
-								Duration {sortColumn === 'duration' && sortIcon}
-							</th>
-							<th className="break-point-sm" onClick={() => this.updateOrder('commentCount')}>
-								Comments {sortColumn === 'commentCount' && sortIcon}
-							</th>
-							<th className="break-point-md" onClick={() => this.updateOrder('likeCount')}>
-								Likes	{sortColumn === 'likeCount' && sortIcon}
-							</th>
-							<th className="break-point-lg" onClick={() => this.updateOrder('dislikeCount')}>
-								Dislikes {sortColumn === 'dislikeCount' && sortIcon}
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{videoDetails
-							.sort(this.sort)
-							.map((video, index) =>
-								<VideoListRow key={video.id} {...video} index={index} />
-							)}
-					</tbody>
-				</table>
-				<style jsx>{`
-
-						th:hover {
-							cursor: pointer;
-						}
-
-				`}</style>
-				{tableMediaQueries}
-			</div>
-		)
-	}
+          .overflow-scroll {
+            overflow: scroll;
+          }
+        `}</style>
+        {tableMediaQueries}
+      </div>
+    );
+  }
 }
 
 export default VideoList;
