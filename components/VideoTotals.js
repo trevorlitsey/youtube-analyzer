@@ -1,7 +1,7 @@
 // @flow
 
-import React from "react";
-import { secondsToHms, tableMediaQueries } from "./helpers";
+import React from 'react';
+import { secondsToHms, tableMediaQueries } from './helpers';
 
 type Props = {
   totalVideos: number,
@@ -41,12 +41,12 @@ const VideoTotals = (props: Props) => {
           </thead>
           <tbody>
             <tr>
-              <td>{totalVideos ? totalVideos.toLocaleString() : "–"}</td>
-              <td>{viewCount ? viewCount.toLocaleString() : "–"}</td>
-              <td>{duration ? secondsToHms(Math.round(duration)) : "–"}</td>
-              <td>{commentCount ? commentCount.toLocaleString() : "–"}</td>
-              <td>{likeCount ? likeCount.toLocaleString() : "–"}</td>
-              <td>{dislikeCount ? dislikeCount.toLocaleString() : "–"}</td>
+              <td>{totalVideos ? totalVideos.toLocaleString() : '–'}</td>
+              <td>{viewCount ? viewCount.toLocaleString() : '–'}</td>
+              <td>{duration ? secondsToHms(Math.round(duration)) : '–'}</td>
+              <td>{commentCount ? commentCount.toLocaleString() : '–'}</td>
+              <td>{likeCount ? likeCount.toLocaleString() : '–'}</td>
+              <td>{dislikeCount ? dislikeCount.toLocaleString() : '–'}</td>
             </tr>
           </tbody>
         </table>

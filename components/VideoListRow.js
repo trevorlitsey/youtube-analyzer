@@ -1,9 +1,9 @@
-import React from "react";
-import { parse, toSeconds } from "iso8601-duration";
-import { format } from "date-fns";
+import React from 'react';
+import { parse, toSeconds } from 'iso8601-duration';
+import { format } from 'date-fns';
 
-import { secondsToHms, tableMediaQueries } from "./helpers";
-import { Video } from "./types";
+import { secondsToHms, tableMediaQueries } from './helpers';
+import { Video } from './types';
 
 const VideoListRow = props => {
   const {
@@ -17,12 +17,12 @@ const VideoListRow = props => {
     dislikeCount,
     index,
   } = props;
-  const noData = "-";
+  const noData = '-';
 
   return (
     <tr key={id}>
       <td>{index + 1}</td>
-      <td>{publishedAt ? format(publishedAt, "YY.MM.DD") : noData}</td>
+      <td>{publishedAt ? format(publishedAt, 'YY.MM.DD') : noData}</td>
       <td>
         <a href={`https://www.youtube.com/watch?v=${id}`} target="blank">
           {title ? title : noData}

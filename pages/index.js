@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import Router from 'next/router'
+import Router from 'next/router';
 
 import Layout from '../components/Layout';
 import Form from '../components/Form';
@@ -13,64 +13,62 @@ import { getPlaylistIdFromUrl, getChannelIdFromUrl } from '../helpers';
 import type { RecentSearches as RecentSearchesType } from '../components/types';
 
 type State = {
-	recentSearches: RecentSearchesType
-}
+  recentSearches: RecentSearchesType,
+};
 
 class Index extends React.PureComponent<{}, State> {
+  state = {
+    recentSearches: {},
+  };
 
-	state = {
-		recentSearches: {}
-	}
+  componentDidMount = () => {
+    const recentSearches = JSON.parse(
+      window.localStorage.getItem('youtubeAnalyzer') || '{}'
+    );
+    this.setState({ recentSearches });
+  };
 
-	componentDidMount = () => {
-		const recentSearches = JSON.parse(window.localStorage.getItem('youtubeAnalyzer') || '{}');
-		this.setState({ recentSearches })
-	}
+  handleSubmit = ({ option, text }: { option: string, text: string }) => {
+    let query;
 
-	handleSubmit = ({ option, text }: { option: string, text: string }) => {
+    switch (option) {
+      case 'playlistUrl':
+        const playlistId = getPlaylistIdFromUrl(text);
+        query = { playlistId };
+        break;
 
-		let query;
+      case 'playlistId':
+        query = { playlistId: text };
+        break;
 
-		switch (option) {
-			case 'playlistUrl':
-				const playlistId = getPlaylistIdFromUrl(text);
-				query = { playlistId }
-				break;
+      case 'channelUrl':
+        const channelId = getChannelIdFromUrl(text);
+        query = { channelId };
+        break;
 
-			case 'playlistId':
-				query = { playlistId: text }
-				break;
+      case 'channelId':
+        query = { channelId: text };
+        break;
+    }
 
-			case 'channelUrl':
-				const channelId = getChannelIdFromUrl(text);
-				query = { channelId }
-				break;
+    // all good
+    Router.push({
+      pathname: '/search',
+      query,
+    });
+  };
 
-			case 'channelId':
-				query = { channelId: text }
-				break;
-		}
+  render() {
+    const { recentSearches } = this.state;
 
-		// all good
-		Router.push({
-			pathname: '/search',
-			query,
-		})
-
-	}
-
-	render() {
-
-		const { recentSearches } = this.state;
-
-		return (
-			<Layout>
-				<Form handleSubmit={this.handleSubmit} />
-				<RecentSearches recentSearches={recentSearches} />
-				<Footer />
-			</Layout>
-		)
-	}
+    return (
+      <Layout>
+        <Form handleSubmit={this.handleSubmit} />
+        <RecentSearches recentSearches={recentSearches} />
+        <Footer />
+      </Layout>
+    );
+  }
 }
 
 export default Index;

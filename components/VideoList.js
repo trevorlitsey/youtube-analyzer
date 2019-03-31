@@ -1,16 +1,16 @@
 // @flow
 
-import React from "react";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import faSortUp from "@fortawesome/fontawesome-free-solid/faSortUp";
-import faSortDown from "@fortawesome/fontawesome-free-solid/faSortDown";
-import { parse, toSeconds } from "iso8601-duration";
-import { format } from "date-fns";
+import React from 'react';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp';
+import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
+import { parse, toSeconds } from 'iso8601-duration';
+import { format } from 'date-fns';
 
-import { secondsToHms, tableMediaQueries } from "./helpers";
-import type { Video } from "./types";
+import { secondsToHms, tableMediaQueries } from './helpers';
+import type { Video } from './types';
 
-import VideoListRow from "./VideoListRow";
+import VideoListRow from './VideoListRow';
 
 type Props = {
   videoDetails: Array<any>,
@@ -23,7 +23,7 @@ type State = {
 
 class VideoList extends React.Component<Props, State> {
   state = {
-    sortColumn: "publishedAt",
+    sortColumn: 'publishedAt',
     sortDirection: true,
   };
 
@@ -42,19 +42,19 @@ class VideoList extends React.Component<Props, State> {
     let result;
 
     switch (sortColumn) {
-      case "publishedAt":
+      case 'publishedAt':
         result = sortDirection
           ? new Date(a.publishedAt) - new Date(b.publishedAt)
           : new Date(b.publishedAt) - new Date(a.publishedAt);
         break;
-      case "title":
+      case 'title':
         if (sortDirection) {
           result = a.title.toUpperCase() > b.title.toUpperCase() ? 1 : -1;
         } else {
           result = a.title.toUpperCase() < b.title.toUpperCase() ? 1 : -1;
         }
         break;
-      case "duration":
+      case 'duration':
         const [one, two] = [
           Math.round(toSeconds(parse(a.duration))),
           Math.round(toSeconds(parse(b.duration))),
@@ -90,35 +90,33 @@ class VideoList extends React.Component<Props, State> {
             <thead>
               <tr>
                 <th>#</th>
-                <th onClick={() => this.updateOrder("publishedAt")}>
-                  Release date {sortColumn === "publishedAt" && sortIcon}
+                <th onClick={() => this.updateOrder('publishedAt')}>
+                  Release date {sortColumn === 'publishedAt' && sortIcon}
                 </th>
-                <th onClick={() => this.updateOrder("title")}>
-                  Title {sortColumn === "title" && sortIcon}
+                <th onClick={() => this.updateOrder('title')}>
+                  Title {sortColumn === 'title' && sortIcon}
                 </th>
-                <th onClick={() => this.updateOrder("viewCount")}>
-                  Views {sortColumn === "viewCount" && sortIcon}
+                <th onClick={() => this.updateOrder('viewCount')}>
+                  Views {sortColumn === 'viewCount' && sortIcon}
                 </th>
-                <th onClick={() => this.updateOrder("duration")}>
-                  Duration {sortColumn === "duration" && sortIcon}
+                <th onClick={() => this.updateOrder('duration')}>
+                  Duration {sortColumn === 'duration' && sortIcon}
                 </th>
-                <th onClick={() => this.updateOrder("commentCount")}>
-                  Comments {sortColumn === "commentCount" && sortIcon}
+                <th onClick={() => this.updateOrder('commentCount')}>
+                  Comments {sortColumn === 'commentCount' && sortIcon}
                 </th>
-                <th onClick={() => this.updateOrder("likeCount")}>
-                  Likes {sortColumn === "likeCount" && sortIcon}
+                <th onClick={() => this.updateOrder('likeCount')}>
+                  Likes {sortColumn === 'likeCount' && sortIcon}
                 </th>
-                <th onClick={() => this.updateOrder("dislikeCount")}>
-                  Dislikes {sortColumn === "dislikeCount" && sortIcon}
+                <th onClick={() => this.updateOrder('dislikeCount')}>
+                  Dislikes {sortColumn === 'dislikeCount' && sortIcon}
                 </th>
               </tr>
             </thead>
             <tbody>
-              {videoDetails
-                .sort(this.sort)
-                .map((video, index) => (
-                  <VideoListRow key={video.id} {...video} index={index} />
-                ))}
+              {videoDetails.sort(this.sort).map((video, index) => (
+                <VideoListRow key={video.id} {...video} index={index} />
+              ))}
             </tbody>
           </table>
         </div>

@@ -1,12 +1,12 @@
 // @flow
 
-import React from "react";
-import propTypes from "prop-types";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import faSync from "@fortawesome/fontawesome-free-solid/faSync";
-import { isURL, isEmpty } from "validator";
+import React from 'react';
+import propTypes from 'prop-types';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faSync from '@fortawesome/fontawesome-free-solid/faSync';
+import { isURL, isEmpty } from 'validator';
 
-import { getPlaceHolderTest } from "./helpers";
+import { getPlaceHolderTest } from './helpers';
 
 type Props = {
   handleSubmit: any,
@@ -21,13 +21,13 @@ type State = {
 class Form extends React.PureComponent<Props, State> {
   state = {
     loading: false,
-    placeholder: getPlaceHolderTest("playlistUrl"),
-    errorMessage: "",
+    placeholder: getPlaceHolderTest('playlistUrl'),
+    errorMessage: '',
   };
 
   updatePlaceholder = () => {
     const placeholder = getPlaceHolderTest(
-      this.refs.option && this.refs.option.value,
+      this.refs.option && this.refs.option.value
     );
     this.setState({ placeholder });
   };
@@ -40,18 +40,18 @@ class Form extends React.PureComponent<Props, State> {
 
     // is empty
     if (isEmpty(text)) {
-      const thing = option.includes("Url") ? "a url" : "an id";
+      const thing = option.includes('Url') ? 'a url' : 'an id';
       return this.setState({ errorMessage: `Please enter ${thing}` });
     }
 
     // is url
-    if (option.includes("Url") && !isURL(text)) {
-      return this.setState({ errorMessage: "Please enter a valid url!" });
+    if (option.includes('Url') && !isURL(text)) {
+      return this.setState({ errorMessage: 'Please enter a valid url!' });
     }
 
     // is id
-    else if (option.includes("Id") && isURL(text)) {
-      return this.setState({ errorMessage: "Please enter a valid ID!" });
+    else if (option.includes('Id') && isURL(text)) {
+      return this.setState({ errorMessage: 'Please enter a valid ID!' });
     }
 
     // all good
