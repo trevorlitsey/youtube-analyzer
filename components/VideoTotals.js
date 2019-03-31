@@ -1,18 +1,7 @@
-// @flow
-
 import React from 'react';
 import { secondsToHms, tableMediaQueries } from './helpers';
 
-type Props = {
-  totalVideos: number,
-  viewCount: number,
-  duration: number,
-  commentCount: number,
-  likeCount: number,
-  dislikeCount: number,
-};
-
-const VideoTotals = (props: Props) => {
+const VideoTotals = props => {
   const {
     totalVideos,
     viewCount,

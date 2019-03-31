@@ -1,14 +1,8 @@
-// @flow
-
 import * as React from 'react';
 import Link from 'next/link';
 import { Menu, MenuItem } from 'react-foundation';
 
-type Props = {
-  children?: React.Node,
-};
-
-const Layout = ({ children }: Props) => {
+const Layout = ({ children }) => {
   return (
     <div>
       <Menu className="top-bar">

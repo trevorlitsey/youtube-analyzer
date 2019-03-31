@@ -1,12 +1,9 @@
-// @flow
 import React from 'react';
 
 import { parse, toSeconds } from 'iso8601-duration';
 
-import type { Video } from './types';
-
 // https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096512
-export function secondsToHms(d: number) {
+export function secondsToHms(d) {
   d = Number(d);
   var h = Math.floor(d / 3600);
   var m = Math.floor((d % 3600) / 60);
@@ -18,7 +15,7 @@ export function secondsToHms(d: number) {
   return hDisplay + mDisplay + sDisplay;
 }
 
-export function getPlaceHolderTest(optionValue: string = '') {
+export function getPlaceHolderTest(optionValue) {
   const isUrl = optionValue.includes('Url');
   const isChannel = optionValue.includes('channel');
 

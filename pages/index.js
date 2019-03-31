@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import Router from 'next/router';
 
@@ -10,13 +8,7 @@ import Footer from '../components/Footer';
 
 import { getPlaylistIdFromUrl, getChannelIdFromUrl } from '../helpers';
 
-import type { RecentSearches as RecentSearchesType } from '../components/types';
-
-type State = {
-  recentSearches: RecentSearchesType,
-};
-
-class Index extends React.PureComponent<{}, State> {
+class Index extends React.PureComponent {
   state = {
     recentSearches: {},
   };
@@ -28,7 +20,7 @@ class Index extends React.PureComponent<{}, State> {
     this.setState({ recentSearches });
   };
 
-  handleSubmit = ({ option, text }: { option: string, text: string }) => {
+  handleSubmit = ({ option, text }) => {
     let query;
 
     switch (option) {

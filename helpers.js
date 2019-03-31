@@ -1,5 +1,5 @@
-const axios = require("axios");
-const iso = require("iso8601-duration");
+const axios = require('axios');
+const iso = require('iso8601-duration');
 const { parse, toSeconds } = iso;
 
 const getPlaylistIdFromUrl = url => {
@@ -7,18 +7,18 @@ const getPlaylistIdFromUrl = url => {
   return parsed.list;
 };
 
-const getChannelIdFromUrl = (url = "") => {
-  const arr = url.split("/");
+const getChannelIdFromUrl = (url = '') => {
+  const arr = url.split('/');
   return arr[arr.length - 1];
 };
 
 const getApiUrl = (
   section,
   userParams,
-  apiKey = "AIzaSyAlAtI54mpJ7iDblL-pisPlQr8F6vmTy0A",
+  apiKey = 'AIzaSyAlAtI54mpJ7iDblL-pisPlQr8F6vmTy0A'
 ) => {
   const params = {
-    part: "snippet",
+    part: 'snippet',
     maxResults: 50,
     ...userParams,
   };
@@ -29,7 +29,7 @@ const getApiUrl = (
     .map(([key, value]) => {
       return `&${key}=${value}`;
     })
-    .join("");
+    .join('');
 
   return baseUrl + paramsUrl;
 };
@@ -63,14 +63,14 @@ const getResultPages = async (apiSection, params) => {
 const getVideosFromPlaylistId = async playlistId => {
   const params = {
     playlistId,
-    part: "contentDetails,snippet",
+    part: 'contentDetails,snippet',
   };
 
-  const resultPages = await getResultPages("playlistItems", params);
+  const resultPages = await getResultPages('playlistItems', params);
 
   // video ids in [50, 50, remaining]
   const videoIds = resultPages.map(obj =>
-    obj.items.map(item => item.contentDetails.videoId),
+    obj.items.map(item => item.contentDetails.videoId)
   );
 
   return videoIds;
@@ -83,7 +83,7 @@ const getVideosFromChannelId = async channelId => {
     channelId,
   };
 
-  const resultPages = await getResultPages("search", params);
+  const resultPages = await getResultPages('search', params);
 
   if (resultPages.length) {
     // video ids in [50, 50, remaining]
@@ -95,9 +95,9 @@ const getVideosFromChannelId = async channelId => {
 
 const processVideoIds = async videoIds => {
   const videoPromises = videoIds.map(page => {
-    const id = page.join(",");
-    const url = getApiUrl("videos", {
-      part: "statistics,snippet,contentDetails",
+    const id = page.join(',');
+    const url = getApiUrl('videos', {
+      part: 'statistics,snippet,contentDetails',
       id,
     });
     return axios.get(url);
@@ -136,7 +136,7 @@ const processVideoIds = async videoIds => {
   }
 };
 
-export function getVideoTotals(videoDetails: Array<any>) {
+export function getVideoTotals(videoDetails) {
   const statistics = {
     viewCount: 0,
     commentCount: 0,
@@ -154,7 +154,7 @@ export function getVideoTotals(videoDetails: Array<any>) {
 
   statistics.duration = videoDetails.reduce(
     (acc, video) => (acc += toSeconds(parse(video.duration))),
-    0,
+    0
   );
 
   return statistics;
@@ -174,10 +174,10 @@ module.exports = helpers;
 
 // ********
 function getJsonFromUrl(url) {
-  var query = url.split("?")[1];
+  var query = url.split('?')[1];
   var result = {};
-  query.split("&").forEach(function(part) {
-    var item = part.split("=");
+  query.split('&').forEach(function(part) {
+    var item = part.split('=');
     result[item[0]] = decodeURIComponent(item[1]);
   });
   return result;

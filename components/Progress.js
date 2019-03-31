@@ -1,12 +1,6 @@
-// @flow
-
 import React from 'react';
 
-type Props = {
-  progress: number,
-};
-
-const Progress = ({ progress }: Props) => {
+const Progress = ({ progress }) => {
   return (
     <div
       className="progress"

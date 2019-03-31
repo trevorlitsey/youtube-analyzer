@@ -1,15 +1,9 @@
-// @flow
-
 import React from 'react';
 import Link from 'next/link';
 
 import Layout from '../components/Layout';
 
-type Props = {
-  query: string,
-};
-
-const BadRequest = (props: Props) => {
+const BadRequest = props => {
   const { query } = props;
 
   return (

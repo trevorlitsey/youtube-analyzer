@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp';
@@ -8,26 +6,16 @@ import { parse, toSeconds } from 'iso8601-duration';
 import { format } from 'date-fns';
 
 import { secondsToHms, tableMediaQueries } from './helpers';
-import type { Video } from './types';
 
 import VideoListRow from './VideoListRow';
 
-type Props = {
-  videoDetails: Array<any>,
-};
-
-type State = {
-  sortColumn: string,
-  sortDirection: boolean,
-};
-
-class VideoList extends React.Component<Props, State> {
+class VideoList extends React.Component {
   state = {
     sortColumn: 'publishedAt',
     sortDirection: true,
   };
 
-  updateOrder = (key: string) => {
+  updateOrder = key => {
     const { sortColumn, sortDirection } = { ...this.state };
     if (key === sortColumn) {
       this.setState({ sortDirection: !sortDirection });
@@ -36,7 +24,7 @@ class VideoList extends React.Component<Props, State> {
     }
   };
 
-  sort = (a: Video, b: Video) => {
+  sort = (a, b) => {
     const { sortColumn, sortDirection } = this.state;
 
     let result;
@@ -114,9 +102,11 @@ class VideoList extends React.Component<Props, State> {
               </tr>
             </thead>
             <tbody>
-              {videoDetails.sort(this.sort).map((video, index) => (
-                <VideoListRow key={video.id} {...video} index={index} />
-              ))}
+              {videoDetails
+                .sort(this.sort)
+                .map((video, index) => (
+                  <VideoListRow key={video.id} {...video} index={index} />
+                ))}
             </tbody>
           </table>
         </div>

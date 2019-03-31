@@ -3,7 +3,6 @@ import { parse, toSeconds } from 'iso8601-duration';
 import { format } from 'date-fns';
 
 import { secondsToHms, tableMediaQueries } from './helpers';
-import { Video } from './types';
 
 const VideoListRow = props => {
   const {

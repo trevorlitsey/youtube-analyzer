@@ -1,24 +1,9 @@
-// @flow
-
 import React from 'react';
 import Link from 'next/link';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
 
-import type {
-  RecentSearches as RecentSearchesType,
-  RecentSearchItem as RecentSearchItemType,
-} from './types';
-
-type Props = {
-  recentSearches: RecentSearchesType,
-};
-
-type State = {
-  loading: string,
-};
-
-class RecentSearches extends React.PureComponent<Props, State> {
+class RecentSearches extends React.PureComponent {
   state = {
     loading: '',
   };
@@ -42,8 +27,8 @@ class RecentSearches extends React.PureComponent<Props, State> {
         <h5>Recent searches</h5>
         <ul>
           {Object.values(recentSearches)
-            .sort((itemA: any, itemB: any) => itemB.date - itemA.date) // sorry, flow
-            .map((item: any) => (
+            .sort((itemA, itemB) => itemB.date - itemA.date) // sorry, flow
+            .map(item => (
               <li onClick={() => this.setState({ loading: item.id })}>
                 <Link href={`/search?${item.type}=${item.id}`}>
                   <a>
